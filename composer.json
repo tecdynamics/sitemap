@@ -1,0 +1,21 @@
+{
+	"name": "tecdynamics/sitemap",
+	"description": "Sitemap package for Laravel.",
+	"license": "MIT",
+	"require": {
+	},
+	"autoload": {
+		"psr-4": {
+			"Tec\\Sitemap\\": "src"
+		}
+	},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Tec\\Sitemap\\Providers\\SitemapServiceProvider"
+			]
+		}
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true
+}
