@@ -5,8 +5,8 @@
 <head>
 <meta charset="utf-8"/>
 <title>XML Sitemap</title>
-<script type="text/javascript" src="https://cdn.damianoff.com/repo/jquery/jquery-1.4.2.min.js"></script>
-<script type="text/javascript" src="https://cdn.damianoff.com/repo/jquery.tablesorter/2.0.5/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js"></script>
 <script	type="text/javascript"><![CDATA[
 $(document).ready(function() {
 $("#sitemap").tablesorter({sortList:[[6,1],[4,1]],widgets:['zebra']});
@@ -103,9 +103,6 @@ footer
 		<thead>
 	      <tr bgcolor="#9acd32">
 	        <th style="text-align:left">URL</th>
-	        <th style="text-align:left">Alternates</th>
-			<th style="text-align:left">Images</th>
-			<th style="text-align:left">Videos</th>
 	        <th style="text-align:left">Priority</th>
 	        <th style="text-align:left">Update freq</th>
 	        <th style="text-align:left">Updated at</th>
@@ -115,9 +112,6 @@ footer
 	      <xsl:for-each select="s:urlset/s:url">
 	      <tr>
 	        <td class="url"><xsl:value-of select="s:loc"/></td>
-	        <td><xsl:value-of select="count(xhtml:link)"/></td>
-	        <td><xsl:value-of select="count(image:image)"/></td>
-	        <td><xsl:value-of select="count(video:video)"/></td>
 	        <td><xsl:value-of select="concat(s:priority*100,'%')"/></td>
 	        <td><xsl:value-of select="s:changefreq"/></td>
 	        <td><xsl:value-of select="concat(substring(s:lastmod,0,11),concat(' ', substring(s:lastmod,12,5)))"/></td>

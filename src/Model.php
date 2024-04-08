@@ -3,217 +3,102 @@
 namespace Tec\Sitemap;
 
 use Carbon\Carbon;
-use DateTime;
 
 class Model
 {
-    /**
-     * @var array
-     */
-    private $items = [];
+    protected array $items = [];
 
-    /**
-     * @var array
-     */
-    private $sitemaps = [];
+    protected array $sitemaps = [];
 
-    /**
-     * @var string
-     */
-    private $title = null;
+    protected string|null $title = null;
 
-    /**
-     * @var string
-     */
-    private $link = null;
+    protected string|null $link = null;
 
-    /**
-     * Enable or disable xsl styles.
-     *
-     * @var bool
-     */
-    private $useStyles = true;
+    protected mixed $useStyles = true;
 
-    /**
-     * Set custom location for xsl styles (must end with slash).
-     *
-     * @var string
-     */
-    private $sloc = '/vendor/core/packages/sitemap/styles/';
+    protected string $sloc = '/vendor/core/packages/sitemap/styles/';
 
-    /**
-     * Enable or disable cache.
-     *
-     * @var bool
-     */
-    private $useCache = false;
+    protected bool $useCache = false;
 
-    /**
-     * Unique cache key.
-     *
-     * @var string
-     */
-    private $cacheKey = 'cms-sitemap.';
+    protected string $cacheKey = 'cms-sitemap.';
 
-    /**
-     * Cache duration, can be int or timestamp.
-     *
-     * @var Carbon|Datetime|int
-     */
-    private $cacheDuration = 3600;
+    protected int $cacheDuration = 60;
 
-    /**
-     * Escaping html entities.
-     *
-     * @var bool
-     */
-    private $escaping = true;
+    protected bool $escaping = true;
 
-    /**
-     * Use limitSize() for big sitemaps.
-     *
-     * @var bool
-     */
-    private $useLimitSize = false;
+    protected bool $useLimitSize = false;
 
-    /**
-     * Custom max size for limitSize().
-     *
-     * @var bool
-     */
-    private $maxSize = null;
+    protected bool|int|null $maxSize = null;
 
-    /**
-     * Use gzip compression.
-     *
-     * @var bool
-     */
-    private $useGzip = false;
+    protected bool $useGzip = false;
 
     /**
      * Populating model variables from configuration file.
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
-        $this->useCache = isset($config['use_cache']) ? $config['use_cache'] : $this->useCache;
-        $this->cacheKey = isset($config['cache_key']) ? $config['cache_key'] : $this->cacheKey;
-        $this->cacheDuration = isset($config['cache_duration']) ? $config['cache_duration'] : $this->cacheDuration;
-        $this->escaping = isset($config['escaping']) ? $config['escaping'] : $this->escaping;
-        $this->useLimitSize = isset($config['use_limit_size']) ? $config['use_limit_size'] : $this->useLimitSize;
-        $this->useStyles = isset($config['use_styles']) ? $config['use_styles'] : $this->useStyles;
-        $this->sloc = isset($config['styles_location']) ? $config['styles_location'] : $this->sloc;
-        $this->maxSize = isset($config['max_size']) ? $config['max_size'] : $this->maxSize;
-        $this->useGzip = isset($config['use_gzip']) ? $config['use_gzip'] : $this->useGzip;
+        $this->useCache = $config['use_cache'] ?? $this->useCache;
+        $this->cacheKey = $config['cache_key'] ?? $this->cacheKey;
+        $this->cacheDuration = $config['cache_duration'] ?? $this->cacheDuration;
+        $this->escaping = $config['escaping'] ?? $this->escaping;
+        $this->useLimitSize = $config['use_limit_size'] ?? $this->useLimitSize;
+        $this->useStyles = $config['use_styles'] ?? $this->useStyles;
+        $this->sloc = $config['styles_location'] ?? $this->sloc;
+        $this->maxSize = $config['max_size'] ?? $this->maxSize;
+        $this->useGzip = $config['use_gzip'] ?? $this->useGzip;
     }
 
-    /**
-     * Returns $items array.
-     *
-     * @return array
-     */
-    public function getItems()
+    public function getItems(): array
     {
         return $this->items;
     }
 
-    /**
-     * Returns $sitemaps array.
-     *
-     * @return array
-     */
-    public function getSitemaps()
+    public function getSitemaps(): array
     {
         return $this->sitemaps;
     }
 
-    /**
-     * Returns $title value.
-     *
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): string|null
     {
         return $this->title;
     }
 
-    /**
-     * Returns $link value.
-     *
-     * @return string
-     */
-    public function getLink()
+    public function getLink(): string|null
     {
         return $this->link;
     }
 
-    /**
-     * Returns $useStyles value.
-     *
-     * @return bool
-     */
-    public function isUseStyles()
+    public function isUseStyles(): bool
     {
         return $this->useStyles;
     }
 
-    /**
-     * Returns $sloc value.
-     *
-     * @return string
-     */
-    public function getSloc()
+    public function getSloc(): string
     {
         return $this->sloc;
     }
 
-    /**
-     * Returns $useCache value.
-     *
-     * @return bool
-     */
-    public function isUseCache()
+    public function isUseCache(): bool
     {
         return $this->useCache;
     }
 
-    /**
-     * Returns $CacheKey value.
-     *
-     * @return string
-     */
-    public function getCacheKey()
+    public function getCacheKey(): string
     {
-        return $this->cacheKey;
+        return $this->cacheKey . url('/');
     }
 
-    /**
-     * Returns $CacheDuration value.
-     *
-     * @return string
-     */
-    public function getCacheDuration()
+    public function getCacheDuration(): int|string
     {
         return $this->cacheDuration;
     }
 
-    /**
-     * Returns $escaping value.
-     *
-     * @return bool
-     */
-    public function isEscaping()
+    public function isEscaping(): bool
     {
         return $this->escaping;
     }
 
-    /**
-     * Returns $useLimitSize value.
-     *
-     * @return bool
-     */
-    public function isUseLimitSize()
+    public function isUseLimitSize(): bool
     {
         return $this->useLimitSize;
     }
@@ -221,7 +106,7 @@ class Model
     /**
      * Returns $maxSize value.
      *
-     * @param int $maxSize
+     * @return bool|mixed|null
      */
     public function getMaxSize()
     {
@@ -231,7 +116,7 @@ class Model
     /**
      * Returns $useGzip value.
      *
-     * @param bool $useGzip
+     * @return bool|mixed
      */
     public function getUseGzip()
     {
@@ -251,7 +136,7 @@ class Model
     /**
      * Adds item to $items array.
      *
-     * @param array $item
+     * @param array $items
      */
     public function setItems($items)
     {
@@ -389,7 +274,7 @@ class Model
     /**
      * Set cache duration value.
      *
-     * @param Carbon|Datetime|int $cacheDuration
+     * @param Carbon|\Datetime|int $cacheDuration
      */
     public function setCacheDuration($cacheDuration)
     {
