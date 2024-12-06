@@ -10,9 +10,9 @@ class Model
 
     protected array $sitemaps = [];
 
-    protected string|null $title = null;
+    protected ?string $title = null;
 
-    protected string|null $link = null;
+    protected ?string $link = null;
 
     protected mixed $useStyles = true;
 
@@ -58,12 +58,12 @@ class Model
         return $this->sitemaps;
     }
 
-    public function getTitle(): string|null
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    public function getLink(): string|null
+    public function getLink(): ?string
     {
         return $this->link;
     }
